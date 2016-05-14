@@ -1,10 +1,14 @@
+require "pry"
 class Product
-  attr_reader :title
+  attr_reader :title, :price, :stock
 
   @@products = []
 
   def initialize(options = {})
     @title = options[:title]
+    @price = options[:price]
+    @stock = options[:stock]
+
     add_to_products
   end
 
@@ -23,7 +27,7 @@ class Product
   end
 
   def duplicate_title?
-    @@products.each do |product|
+    @@products.any? do |product|
       product.title == title
     end
   end
