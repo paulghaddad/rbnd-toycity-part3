@@ -16,6 +16,10 @@ class Product
     @@products
   end
 
+  def self.products=(products)
+    @@products = products
+  end
+
   private
 
   def add_to_products
