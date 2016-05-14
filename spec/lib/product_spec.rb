@@ -13,6 +13,16 @@ describe Product do
                                                stock: 10)
       end
     end
+
+    context "duplicate title" do
+      it "raises an Duplicate Product Error" do
+       create_product(title: "My New Product",
+                                     price: 20.00,
+                                     stock: 10)
+
+        expect { create_product(title: "My New Product") }.to raise_error(DuplicateProductError)
+      end
+    end
   end
 
   private
