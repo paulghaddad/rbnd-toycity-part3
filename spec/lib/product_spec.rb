@@ -40,6 +40,17 @@ describe Product do
     end
   end
 
+  describe ".find_by_title" do
+    it "should return the product with the title" do
+      product_1 = create_product(title: "Product 1")
+      product_2 = create_product(title: "Product 2")
+
+      found_product = Product.find_by_title("Product 1")
+
+      expect(found_product.title).to eq("Product 1")
+    end
+  end
+
   private
 
   def create_product(title: "Product", price: 10.00, stock: 0)
