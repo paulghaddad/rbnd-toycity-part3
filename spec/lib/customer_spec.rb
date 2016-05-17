@@ -43,5 +43,16 @@ describe Customer do
         expect(customer.name).to eq("Paul Haddad")
       end
     end
+
+    describe "#purchase" do
+      it "creates a transaction" do
+        customer = Customer.new(name: "Paul Haddad")
+        product = Product.new(title: "My New Product", price: 10.00, stock: 1)
+
+        customer.purchase(product)
+
+        expect(Transaction.all.count).to eq(1)
+      end
+    end
   end
 end
