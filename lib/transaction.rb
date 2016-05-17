@@ -12,9 +12,7 @@ class Transaction
   def initialize(customer, product)
     @customer = customer
     @product = product
-    assign_transaction_id
-    decrement_product_stock
-    add_to_transaction_registry
+    process_transaction
   end
 
   def self.all
@@ -28,6 +26,19 @@ class Transaction
   end
 
   private
+
+  def process_transaction
+    check_if_product_in_stock
+    assign_transaction_id
+    decrement_product_stock
+    add_to_transaction_registry
+  end
+
+  def check_if_product_in_stock
+    if product.stock < 1
+      raise OutOfStockError, "'#{product.title}' is out of stock."
+    end
+  end
 
   def assign_transaction_id
     @id = Transaction.id_to_assign

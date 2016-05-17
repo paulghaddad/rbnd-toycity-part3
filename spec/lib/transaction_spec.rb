@@ -46,6 +46,16 @@ describe Transaction do
 
       expect(registry).to contain_exactly(transaction)
     end
+
+    context "product out of stock" do
+      it "raises an OutOfStock error" do
+        customer = Customer.new(name: "Paul Haddad")
+        product = create_product(title: "Product 1", stock: 0)
+
+        expect { Transaction.new(customer, product) }.to raise_error(
+          OutOfStockError, /'Product 1' is out of stock/)
+      end
+    end
   end
 
   describe ".all" do
@@ -75,7 +85,7 @@ describe Transaction do
 
   private
 
-  def create_product(title: "Product", price: 10.00, stock: 0)
+  def create_product(title: "Product", price: 10.00, stock: 5)
     Product.new(title: title, price: price, stock: stock)
   end
 end

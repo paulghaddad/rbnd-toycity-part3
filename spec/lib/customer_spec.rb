@@ -4,6 +4,7 @@ describe Customer do
 
   before do
     Customer.customers = []
+    Transaction.transaction_registry = []
   end
 
   describe "#new" do
