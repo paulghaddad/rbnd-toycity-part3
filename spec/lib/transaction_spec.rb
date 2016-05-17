@@ -93,6 +93,14 @@ describe Transaction do
 
       expect(product.stock).to eq(5)
     end
+
+    it "raises an error if the product was not purchased by the customer" do
+      customer = Customer.new(name: "Paul Haddad")
+      product = Product.new(title: "Product", price: 10.00, stock: 5)
+
+      expect { Transaction.return(customer, product) }.to raise_error(
+        InvalidReturnError, /Paul Haddad did not purchase this amount of the product/)
+    end
   end
 
   private

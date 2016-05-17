@@ -27,7 +27,11 @@ class Transaction
   end
 
   def self.return(customer, product, amount_of_product = -1)
-    Transaction.new(customer, product, amount_of_product)
+    if self.valid_return?(customer, product, amount_of_product)
+      Transaction.new(customer, product, amount_of_product)
+    else
+      raise InvalidReturnError, "#{customer.name} did not purchase this amount of the product"
+    end
   end
 
   private
@@ -64,5 +68,20 @@ class Transaction
 
   def purchase?
     amount_of_product > 0
+  end
+
+  def self.valid_return?(customer, product, amount_of_product)
+    Transaction.total_purchases(customer, product) + amount_of_product >= 0
+  end
+
+  def self.total_purchases(customer, product)
+    all_transactions = Transaction.all
+    all_transactions.inject(0) do |total_purchases, transaction|
+      if transaction.customer.name == customer.name && transaction.product.title == product.title
+        total_purchases += transaction.amount_of_product
+      end
+
+      total_purchases
+    end
   end
 end
