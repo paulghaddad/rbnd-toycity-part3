@@ -83,6 +83,18 @@ describe Transaction do
     end
   end
 
+  describe "#return" do
+    it "returns the product and adds back the stock" do
+      customer = Customer.new(name: "Paul Haddad")
+      product = Product.new(title: "Product", price: 10.00, stock: 5)
+      Transaction.new(customer, product)
+
+      Transaction.return(customer, product)
+
+      expect(product.stock).to eq(5)
+    end
+  end
+
   private
 
   def create_product(title: "Product", price: 10.00, stock: 5)

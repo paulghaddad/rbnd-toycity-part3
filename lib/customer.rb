@@ -26,6 +26,11 @@ class Customer
     Transaction.new(self, product)
   end
 
+  def return(product, amount = 1)
+    amount = -amount
+    Transaction.return(self, product, amount)
+  end
+
   private
 
   def add_to_customers_registry

@@ -4,6 +4,7 @@ describe Customer do
 
   before do
     Customer.customers = []
+    Product.products = []
     Transaction.transaction_registry = []
   end
 
@@ -53,6 +54,18 @@ describe Customer do
         customer.purchase(product)
 
         expect(Transaction.all.count).to eq(1)
+      end
+    end
+
+    describe "#return" do
+      it "returns the product" do
+        customer = Customer.new(name: "Paul Haddad")
+        product = Product.new(title: "My New Product", price: 10.00, stock: 1)
+        customer.purchase(product)
+
+        customer.return(product)
+
+        expect(product.stock).to eq(1)
       end
     end
   end
