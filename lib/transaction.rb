@@ -75,13 +75,32 @@ class Transaction
   end
 
   def self.total_purchases(customer, product)
-    all_transactions = Transaction.all
-    all_transactions.inject(0) do |total_purchases, transaction|
-      if transaction.customer.name == customer.name && transaction.product.title == product.title
+    Transaction.all.inject(0) do |total_purchases, transaction|
+      if by_customer?(customer, transaction) && for_product?(product, transaction)
         total_purchases += transaction.amount_of_product
       end
 
       total_purchases
     end
+  end
+
+  def self.transactions_by_customer(customer)
+    Transaction.all.select do |transaction|
+      transaction.customer.name == customer.name
+    end
+  end
+
+  def self.transactions_by_product(product)
+    Transaction.all.select do |transaction|
+      transaction.product.title == product.title
+    end
+  end
+
+  def self.by_customer?(customer, transaction)
+    Transaction.transactions_by_customer(customer).include?(transaction)
+  end
+
+  def self.for_product?(product, transaction)
+    Transaction.transactions_by_product(product).include?(transaction)
   end
 end
