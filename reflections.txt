@@ -1,0 +1,24 @@
+1. How long did you spend working on this project?
+
+I spent approximately 5-6 hours on this project.
+
+2. What was the most rewarding challenge you conquered?
+
+Really making me think about writing code in an object-oriented fashion. I
+completed the project from start to finish using TDD, so that was pretty
+rewarding.
+
+3. What two additional features did you build? Why?
+
+Feature 1: The ability to return a product
+Feature 2: Check to see if the customer purchased enough of the product to allow
+a return to occur.
+
+4. Where do you still have room to grow?
+
+I definitely feel that I did a good job creating the Customer and Product
+classes using good Object-Oriented Programming, I feel the Transaction class can
+be improved. Not only is it too long (over 100 lines), but it has many
+responsibilities. This is the spot where I'm really working at improving my OO
+design skills. I made a lot of progress in this exercise (it was great for
+that!), but want to continue projects to improve in this area.
