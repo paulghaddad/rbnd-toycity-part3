@@ -13,6 +13,7 @@ class Transaction
     @customer = customer
     @product = product
     @amount_of_product = amount_of_product
+
     process_transaction
   end
 
@@ -27,8 +28,8 @@ class Transaction
   end
 
   def self.return(customer, product, amount_of_product = -1)
-    if self.valid_return?(customer, product, amount_of_product)
-      Transaction.new(customer, product, amount_of_product)
+    if valid_return?(customer, product, amount_of_product)
+      create_transaction(customer, product, amount_of_product)
     else
       raise InvalidReturnError, "#{customer.name} did not purchase this amount of the product"
     end
@@ -37,13 +38,13 @@ class Transaction
   private
 
   def process_transaction
-    check_if_product_in_stock if purchase?
+    confirm_product_in_stock if purchase?
     assign_transaction_id
     add_to_transaction_registry
     adjust_product_stock
   end
 
-  def check_if_product_in_stock
+  def confirm_product_in_stock
     if product.stock < 1
       raise OutOfStockError, "'#{product.title}' is out of stock."
     end
@@ -70,8 +71,12 @@ class Transaction
     amount_of_product > 0
   end
 
-  def self.valid_return?(customer, product, amount_of_product)
-    Transaction.total_purchases(customer, product) + amount_of_product >= 0
+  def self.create_transaction(customer, product, amount_of_product)
+    Transaction.new(customer, product, amount_of_product)
+  end
+
+  def self.valid_return?(customer, product, amount_of_product_to_return)
+    Transaction.total_purchases(customer, product) + amount_of_product_to_return >= 0
   end
 
   def self.total_purchases(customer, product)

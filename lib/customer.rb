@@ -26,8 +26,7 @@ class Customer
     Transaction.new(self, product)
   end
 
-  def return(product, amount = 1)
-    amount = -amount
+  def return(product, amount = -1)
     Transaction.return(self, product, amount)
   end
 
